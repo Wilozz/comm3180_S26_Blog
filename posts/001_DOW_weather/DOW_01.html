@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -105,6 +105,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -187,20 +190,301 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="my-post" class="level3">
-<h3 class="anchored" data-anchor-id="my-post">My post</h3>
-<div id="b65e7a00-c0cd-48ac-9987-10fae41c32a5" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'This is some code'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>This is some code</code></pre>
+<section id="which-days-were-the-most-optimal-for-outdoor-bouldering" class="level1">
+<h1>Which Days Were the Most Optimal For Outdoor Bouldering?</h1>
+<p><img src="img/bouldering.jpg" width="450" style="display:block; margin:auto;"></p>
+<p>Outdoor bouldering is a niche and intense form of outdoor climbing on natural rock formations. Bouldering is one type of rock climbing classified by its short but tricky climbs done without any safety harnesses. A more well known form of this activity may be lead climbing or free soloing where climbers scale massive cliff faces thousands of feet tall. A famous climber who recently appeared in the headlines is Alex Honnold who recently climbed the 11th tallest building in the world, Taipei 101, without any safety equipment live on Netflix. He is also the only person to climb the famous mountain El Capitan without safety equipment, a cliff face 3000 feet tall.</p>
+<p><strong>Question:</strong> In the past 25 years, how many days had the most optimal conditions for climbing</p>
+<p>We will define an optimal day for climbing if it satisfies the following conditions - It’s a sunny day - It’s on a weekend as that’s the time most people climb - The temperature is at a comfortable level between 64 and 75 degrees inclusive - There has not been any rain in the last 2 days and no snow within the last week to ensure the rocks have sufficient grip</p>
+<section id="setup" class="level3">
+<h3 class="anchored" data-anchor-id="setup">Setup</h3>
+<div id="b02e5f07-61ba-41ef-aee9-578c05df808c" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="load-the-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="load-the-dataset">Load the Dataset</h3>
+<div id="12c845ca-fa68-4149-a47a-4318f3492704" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weather_df <span class="op">=</span> pd.read_csv(<span class="st">'data/philadelphia_weather_2005_to_2025.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>weather_df <span class="op">=</span> weather_df.assign(date<span class="op">=</span>pd.to_datetime(weather_df[<span class="st">'date'</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<hr>
-<p>The next section</p>
-<hr>
-<p>And the section after that</p>
+<div id="551d9f58-a6e8-46cd-b26a-2e03e80af89f" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>weather_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">day</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">high</th>
+<th data-quarto-table-cell-role="th">low</th>
+<th data-quarto-table-cell-role="th">rain</th>
+<th data-quarto-table-cell-role="th">snow</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">day_num</th>
+<th data-quarto-table-cell-role="th">month_num</th>
+<th data-quarto-table-cell-role="th">dow</th>
+<th data-quarto-table-cell-role="th">dow_name</th>
+<th data-quarto-table-cell-role="th">month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>January 1</td>
+<td>2005</td>
+<td>64</td>
+<td>39</td>
+<td>0.00</td>
+<td>0.0</td>
+<td>2005-01-01</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>Saturday</td>
+<td>January</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>January 2</td>
+<td>2005</td>
+<td>47</td>
+<td>33</td>
+<td>0.01</td>
+<td>0.0</td>
+<td>2005-01-02</td>
+<td>2</td>
+<td>1</td>
+<td>6</td>
+<td>Sunday</td>
+<td>January</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>January 3</td>
+<td>2005</td>
+<td>57</td>
+<td>40</td>
+<td>0.06</td>
+<td>0.0</td>
+<td>2005-01-03</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>Monday</td>
+<td>January</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>January 4</td>
+<td>2005</td>
+<td>55</td>
+<td>44</td>
+<td>0.00</td>
+<td>0.0</td>
+<td>2005-01-04</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>Tuesday</td>
+<td>January</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>January 5</td>
+<td>2005</td>
+<td>47</td>
+<td>36</td>
+<td>0.62</td>
+<td>0.0</td>
+<td>2005-01-05</td>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>Wednesday</td>
+<td>January</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="sunny-days" class="level3">
+<h3 class="anchored" data-anchor-id="sunny-days">Sunny Days</h3>
+<p>The most important condition for outdoor bouldering is that it must be sunny. If it’s raining or snowing, the climber will have poor visibility going up the climb and will also find it difficult to grip the rock. This will make the climb extremely dangerous.</p>
+<div id="a2d2c483-33e9-45c4-ab60-732b36af1990" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sunny_df <span class="op">=</span> weather_df.query(<span class="st">"rain == 0 and snow == 0"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sunny_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>5130</code></pre>
+</div>
+</div>
+<p>As such, we can see there are 5130 days in the past 20 years where it was possible to go climbing.</p>
+</section>
+<section id="weekends" class="level3">
+<h3 class="anchored" data-anchor-id="weekends">Weekends</h3>
+<p>We also know that most climbers are casual, recreational climbers. As such, the most suitable days for them are Fridays, Saturdays and Sundays. As such, we will calculate the number of sunny weekends in the past 20 years which would’ve been the times most climbers were out.</p>
+<div id="ba81d0bd-1642-473e-b21f-2cc7c06b239b" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>weekend_sunny_df <span class="op">=</span> sunny_df.query(<span class="st">"dow &gt;= 4 and dow &lt;= 6"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>weekend_sunny_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>2209</code></pre>
+</div>
+</div>
+<p>Here, we can see that there were 2209 such days which were sunny.</p>
+</section>
+<section id="comfortable-temperature" class="level3">
+<h3 class="anchored" data-anchor-id="comfortable-temperature">Comfortable Temperature</h3>
+<p>Given the nature of outdoor bouldering, you are engaging in physical exercise outside. As such, it would be preferred if the temperature wasn’t too hot or too cold. We will define the optimal temperature to be between 64 and 75 degrees inclusive which is a tight range in which you would be able to stay outside all day comfortably.</p>
+<div id="6edfab4e-4e76-4a16-b287-5118f96ac641" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>good_temp_df <span class="op">=</span> weather_df.query(<span class="st">"high &lt;= 75 and low &gt;= 64"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>good_temp_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>48</code></pre>
+</div>
+</div>
+<p>We can see that the number of days that actually fall within this range is actually quite limited. That’s because it’s very rare for the temperature to stay within that bound completely over the course of the entire day, often exceeding it at noon or dropping below it at night.</p>
+</section>
+<section id="good-weather-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="good-weather-conditions">Good Weather Conditions</h3>
+<p>In outdoor bouldering, it would also be preferred if there was no rain within the last 2 days and no snow within the past week. By climbing on natural rock formations, the rock must be dry when climbing or else it would be very difficult to get a good hold on small holds. As such, time must be given for any rain or snow to dry and melt.</p>
+<section id="no-rain" class="level4">
+<h4 class="anchored" data-anchor-id="no-rain">No Rain</h4>
+<div id="b9ccb780-7758-41ce-8873-838696ab2a9c" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>no_rain <span class="op">=</span> weather_df[<span class="st">"rain"</span>].eq(<span class="dv">0</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>streak_id <span class="op">=</span> (no_rain <span class="op">!=</span> no_rain.shift()).cumsum()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>dry_streak_day <span class="op">=</span> weather_df.groupby(streak_id).cumcount() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>no_rain_two_plus_df <span class="op">=</span> weather_df[no_rain <span class="op">&amp;</span> (dry_streak_day <span class="op">&gt;=</span> <span class="dv">2</span>)].copy()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>no_rain_two_plus_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>3704</code></pre>
+</div>
+</div>
+</section>
+<section id="no-snow" class="level4">
+<h4 class="anchored" data-anchor-id="no-snow">No Snow</h4>
+<div id="c584991b-2abd-460f-9920-9030e64e4154" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>no_snow <span class="op">=</span> weather_df[<span class="st">"snow"</span>].eq(<span class="dv">0</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>snow_streak_id <span class="op">=</span> (no_snow <span class="op">!=</span> no_snow.shift()).cumsum()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>snowless_streak_day <span class="op">=</span> weather_df.groupby(snow_streak_id).cumcount() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>no_snow_week_plus_df <span class="op">=</span> weather_df[no_snow <span class="op">&amp;</span> (snowless_streak_day <span class="op">&gt;=</span> <span class="dv">7</span>)].copy()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>no_snow_week_plus_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>6655</code></pre>
+</div>
+</div>
+</section>
+<section id="no-snow-and-no-rain" class="level4">
+<h4 class="anchored" data-anchor-id="no-snow-and-no-rain">No Snow and No Rain</h4>
+<div id="5b21ee10-6703-450c-b2ac-0a103443a07f" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>good_weather_conditions_df <span class="op">=</span> no_rain_two_plus_df.merge(no_snow_week_plus_df, how <span class="op">=</span> <span class="st">"inner"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>good_weather_conditions_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>3320</code></pre>
+</div>
+</div>
+<p>From the above code chunks, we can observe that there are 3320 days with no rain in the past two days and no snow within the past week. These are the number of days where the rock is dry enough to climb.</p>
+</section>
+</section>
+<section id="number-of-optimal-days" class="level3">
+<h3 class="anchored" data-anchor-id="number-of-optimal-days">Number of Optimal Days</h3>
+<p>Having found the days which satisfy all of our conditions above, we can now merge all the conditions to find the days with the most optimal climbing conditions in the past 20 years.</p>
+<div id="ee613edc-827c-4267-a87b-dc745dd0db8e" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>good_temp_weekends_df <span class="op">=</span> weekend_sunny_df.merge(good_temp_df, how <span class="op">=</span> <span class="st">"inner"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>optimal_days_df <span class="op">=</span> good_temp_weekends_df.merge(good_weather_conditions_df, how <span class="op">=</span> <span class="st">"inner"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>optimal_days_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>1</code></pre>
+</div>
+</div>
+<p>Here we can see that only one day in the past 20 years actually fits all of our conditions.</p>
+<div id="fdd7166e-c0a0-4551-8005-07f631de47bf" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>optimal_days_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">day</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">high</th>
+<th data-quarto-table-cell-role="th">low</th>
+<th data-quarto-table-cell-role="th">rain</th>
+<th data-quarto-table-cell-role="th">snow</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">day_num</th>
+<th data-quarto-table-cell-role="th">month_num</th>
+<th data-quarto-table-cell-role="th">dow</th>
+<th data-quarto-table-cell-role="th">dow_name</th>
+<th data-quarto-table-cell-role="th">month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>June 11</td>
+<td>2022</td>
+<td>75</td>
+<td>66</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>2022-06-11</td>
+<td>11</td>
+<td>6</td>
+<td>5</td>
+<td>Saturday</td>
+<td>June</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>That day is June 11th 2022, a Saturday with a high temperature of 75 degrees and a low of 66 degrees.</p>
+</section>
+<section id="spread-of-non-rainy-days-on-weekends" class="level3">
+<h3 class="anchored" data-anchor-id="spread-of-non-rainy-days-on-weekends">Spread of Non-Rainy Days on Weekends</h3>
+<p>Now, we know that it would be ridiculous to assume that people would only climb on days with the most optimal conditions. As such, we will simply consider the requirments that it must not be raining on the day and it must be on a weekend. A simple bar graph can illustrate the spead of days in which people can climb then.</p>
+<div id="589307e5-21be-42a1-8f1e-ae07b265f4e2" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> (</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    weather_df[weather_df[<span class="st">"rain"</span>] <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">"dow_name in ['Friday','Saturday','Sunday']"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"dow_name"</span>]</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    .reindex([<span class="st">"Friday"</span>,<span class="st">"Saturday"</span>,<span class="st">"Sunday"</span>])</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="4ee97763-8e38-48e1-8fd9-8e8df0f289de" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.bar(counts.index, counts.values)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of Week"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of Non-Rainy Days"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Spead of Non-Rainy Days on Weekends"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW_01_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This graph shows us that the spread of non-rainy days on weekends is roughly the same, with a bit over 2100 days in total. As such, we can conclude that the total number of people who have climbed on a Friday, Saturday or Sunday are roughly equal.</p>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->
