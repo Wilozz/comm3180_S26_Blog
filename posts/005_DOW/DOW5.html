@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Wilson">
-<meta name="dcterms.date" content="2026-01-28">
+<meta name="dcterms.date" content="2026-03-22">
 
-<title>Dataset of the Week #1: The Weather in Philadelphia – My Data Stories</title>
+<title>Dataset of the Week #4: Philly Shooting Data – My Data Stories</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -63,7 +63,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -107,9 +107,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -152,10 +149,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Dataset of the Week #1: The Weather in Philadelphia</h1>
+      <h1 class="title">Dataset of the Week #4: Philly Shooting Data</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">DOW</div>
-                <div class="quarto-category">Weather</div>
+                <div class="quarto-category">Shootings</div>
               </div>
                   </div>
   </div>
@@ -173,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 28, 2026</p>
+        <p class="date">March 22, 2026</p>
       </div>
     </div>
     
@@ -192,298 +189,177 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="which-days-were-the-most-optimal-for-outdoor-bouldering" class="level1">
-<h1>Which Days Were the Most Optimal For Outdoor Bouldering?</h1>
-<p><img src="img/bouldering.jpg" width="450" style="display:block; margin:auto;"></p>
-<p>Outdoor bouldering is a niche and intense form of outdoor climbing on natural rock formations. Bouldering is one type of rock climbing classified by its short but tricky climbs done without any safety harnesses. A more well known form of this activity may be lead climbing or free soloing where climbers scale massive cliff faces thousands of feet tall. A famous climber who recently appeared in the headlines is Alex Honnold who recently climbed the 11th tallest building in the world, Taipei 101, without any safety equipment live on Netflix. He is also the only person to climb the famous mountain El Capitan without safety equipment, a cliff face 3000 feet tall.</p>
-<p><strong>Question:</strong> In the past 25 years, how many days had the most optimal conditions for climbing</p>
-<p>We will define an optimal day for climbing if it satisfies the following conditions - It’s a sunny day - It’s on a weekend as that’s the time most people climb - The temperature is at a comfortable level between 64 and 75 degrees inclusive - There has not been any rain in the last 2 days and no snow within the last week to ensure the rocks have sufficient grip</p>
-<section id="setup" class="level3">
-<h3 class="anchored" data-anchor-id="setup">Setup</h3>
-<div id="b02e5f07-61ba-41ef-aee9-578c05df808c" class="cell" data-execution_count="3">
+<section id="when-is-it-most-dangerous-in-philly" class="level1">
+<h1>When is it Most Dangerous in Philly?</h1>
+<p><img src="img/gunViolence.jpg" width="450" style="display:block; margin:auto;"></p>
+<p>Gun violence is a very prominent issue in Philadelphia. With the city experiencing 826 shootings in 2025 it has one of the highest shooting rates across the country. Most of these shootings do occur in concentrated parts across the city but to ensure safety when going out, it is important to analyse the times of the day in which it is most common for shootings to occur.</p>
+<section id="loading-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="loading-the-data">Loading the Data</h3>
+<div id="6a9d7684-c53f-401c-aa15-42d82ecc08a1" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> ticker</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a26d7b55-976b-4d0d-9350-fbe6fcfb5511" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>shootings_df <span class="op">=</span> pd.read_csv(<span class="st">'data/shootings.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>shootings_df.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>Index(['the_geom', 'the_geom_webmercator', 'objectid', 'year', 'dc_key',
+       'code', 'date_', 'time', 'race', 'sex', 'age', 'wound',
+       'officer_involved', 'offender_injured', 'offender_deceased', 'location',
+       'latino', 'point_x', 'point_y', 'dist', 'inside', 'outside', 'fatal',
+       'lat', 'lng'],
+      dtype='str')</code></pre>
+</div>
+</div>
+<p>While this dataset provides a comprehensive list of information about past shootings in Philadelphia, we will be focusing in specific on the columns regarding the date and times of shootings.</p>
+<p>This dataset spans from 2015-2026, including all recorded shootings during this time. Within this dataset, there are <strong>17,516</strong> total shootings with <strong>20%</strong> of them being fatal.</p>
+</section>
+<section id="parsing-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="parsing-the-data">Parsing the Data</h3>
+<p>We will first process the data, parsing the format of the date time variables stored as well as breaking down the recorded times into their specific hours, days, months and years.</p>
+<div id="fc3f4fca-2e8b-4f9f-845e-c689841c00c3" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>shootings_df[<span class="st">'date_'</span>] <span class="op">=</span> pd.to_datetime(shootings_df[<span class="st">'date_'</span>])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>shootings_df[<span class="st">'hour'</span>] <span class="op">=</span> pd.to_datetime(shootings_df[<span class="st">'time'</span>], <span class="bu">format</span><span class="op">=</span><span class="st">'%H:%M:%S'</span>).dt.hour</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>shootings_df[<span class="st">'month'</span>] <span class="op">=</span> shootings_df[<span class="st">'date_'</span>].dt.month</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>shootings_df[<span class="st">'month_name'</span>] <span class="op">=</span> shootings_df[<span class="st">'date_'</span>].dt.strftime(<span class="st">'%b'</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>shootings_df[<span class="st">'day_of_week'</span>] <span class="op">=</span> shootings_df[<span class="st">'date_'</span>].dt.day_name()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>shootings_df[<span class="st">'year'</span>] <span class="op">=</span> shootings_df[<span class="st">'date_'</span>].dt.year</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>shootings_df[<span class="st">'fatal'</span>] <span class="op">=</span> shootings_df[<span class="st">'fatal'</span>].fillna(<span class="dv">0</span>).astype(<span class="bu">int</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="load-the-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="load-the-dataset">Load the Dataset</h3>
-<div id="12c845ca-fa68-4149-a47a-4318f3492704" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weather_df <span class="op">=</span> pd.read_csv(<span class="st">'data/philadelphia_weather_2005_to_2025.csv'</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>weather_df <span class="op">=</span> weather_df.assign(date<span class="op">=</span>pd.to_datetime(weather_df[<span class="st">'date'</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="551d9f58-a6e8-46cd-b26a-2e03e80af89f" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>weather_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">day</th>
-<th data-quarto-table-cell-role="th">year</th>
-<th data-quarto-table-cell-role="th">high</th>
-<th data-quarto-table-cell-role="th">low</th>
-<th data-quarto-table-cell-role="th">rain</th>
-<th data-quarto-table-cell-role="th">snow</th>
-<th data-quarto-table-cell-role="th">date</th>
-<th data-quarto-table-cell-role="th">day_num</th>
-<th data-quarto-table-cell-role="th">month_num</th>
-<th data-quarto-table-cell-role="th">dow</th>
-<th data-quarto-table-cell-role="th">dow_name</th>
-<th data-quarto-table-cell-role="th">month</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>January 1</td>
-<td>2005</td>
-<td>64</td>
-<td>39</td>
-<td>0.00</td>
-<td>0.0</td>
-<td>2005-01-01</td>
-<td>1</td>
-<td>1</td>
-<td>5</td>
-<td>Saturday</td>
-<td>January</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>January 2</td>
-<td>2005</td>
-<td>47</td>
-<td>33</td>
-<td>0.01</td>
-<td>0.0</td>
-<td>2005-01-02</td>
-<td>2</td>
-<td>1</td>
-<td>6</td>
-<td>Sunday</td>
-<td>January</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
-<td>January 3</td>
-<td>2005</td>
-<td>57</td>
-<td>40</td>
-<td>0.06</td>
-<td>0.0</td>
-<td>2005-01-03</td>
-<td>3</td>
-<td>1</td>
-<td>0</td>
-<td>Monday</td>
-<td>January</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>January 4</td>
-<td>2005</td>
-<td>55</td>
-<td>44</td>
-<td>0.00</td>
-<td>0.0</td>
-<td>2005-01-04</td>
-<td>4</td>
-<td>1</td>
-<td>1</td>
-<td>Tuesday</td>
-<td>January</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>January 5</td>
-<td>2005</td>
-<td>47</td>
-<td>36</td>
-<td>0.62</td>
-<td>0.0</td>
-<td>2005-01-05</td>
-<td>5</td>
-<td>1</td>
-<td>2</td>
-<td>Wednesday</td>
-<td>January</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section>
-<section id="sunny-days" class="level3">
-<h3 class="anchored" data-anchor-id="sunny-days">Sunny Days</h3>
-<p>The most important condition for outdoor bouldering is that it must be sunny. If it’s raining or snowing, the climber will have poor visibility going up the climb and will also find it difficult to grip the rock. This will make the climb extremely dangerous.</p>
-<div id="a2d2c483-33e9-45c4-ab60-732b36af1990" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sunny_df <span class="op">=</span> weather_df.query(<span class="st">"rain == 0 and snow == 0"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sunny_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>5130</code></pre>
-</div>
-</div>
-<p>As such, we can see there are 5130 days in the past 20 years where it was possible to go climbing.</p>
-</section>
-<section id="weekends" class="level3">
-<h3 class="anchored" data-anchor-id="weekends">Weekends</h3>
-<p>We also know that most climbers are casual, recreational climbers. As such, the most suitable days for them are Fridays, Saturdays and Sundays. As such, we will calculate the number of sunny weekends in the past 20 years which would’ve been the times most climbers were out.</p>
-<div id="ba81d0bd-1642-473e-b21f-2cc7c06b239b" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>weekend_sunny_df <span class="op">=</span> sunny_df.query(<span class="st">"dow &gt;= 4 and dow &lt;= 6"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>weekend_sunny_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>2209</code></pre>
-</div>
-</div>
-<p>Here, we can see that there were 2209 such days which were sunny.</p>
-</section>
-<section id="comfortable-temperature" class="level3">
-<h3 class="anchored" data-anchor-id="comfortable-temperature">Comfortable Temperature</h3>
-<p>Given the nature of outdoor bouldering, you are engaging in physical exercise outside. As such, it would be preferred if the temperature wasn’t too hot or too cold. We will define the optimal temperature to be between 64 and 75 degrees inclusive which is a tight range in which you would be able to stay outside all day comfortably.</p>
-<div id="6edfab4e-4e76-4a16-b287-5118f96ac641" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>good_temp_df <span class="op">=</span> weather_df.query(<span class="st">"high &lt;= 75 and low &gt;= 64"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>good_temp_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>48</code></pre>
-</div>
-</div>
-<p>We can see that the number of days that actually fall within this range is actually quite limited. That’s because it’s very rare for the temperature to stay within that bound completely over the course of the entire day, often exceeding it at noon or dropping below it at night.</p>
-</section>
-<section id="good-weather-conditions" class="level3">
-<h3 class="anchored" data-anchor-id="good-weather-conditions">Good Weather Conditions</h3>
-<p>In outdoor bouldering, it would also be preferred if there was no rain within the last 2 days and no snow within the past week. By climbing on natural rock formations, the rock must be dry when climbing or else it would be very difficult to get a good hold on small holds. As such, time must be given for any rain or snow to dry and melt.</p>
-<section id="no-rain" class="level4">
-<h4 class="anchored" data-anchor-id="no-rain">No Rain</h4>
-<div id="b9ccb780-7758-41ce-8873-838696ab2a9c" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>no_rain <span class="op">=</span> weather_df[<span class="st">"rain"</span>].eq(<span class="dv">0</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>streak_id <span class="op">=</span> (no_rain <span class="op">!=</span> no_rain.shift()).cumsum()</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>dry_streak_day <span class="op">=</span> weather_df.groupby(streak_id).cumcount() <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>no_rain_two_plus_df <span class="op">=</span> weather_df[no_rain <span class="op">&amp;</span> (dry_streak_day <span class="op">&gt;=</span> <span class="dv">2</span>)].copy()</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>no_rain_two_plus_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>3704</code></pre>
-</div>
-</div>
-</section>
-<section id="no-snow" class="level4">
-<h4 class="anchored" data-anchor-id="no-snow">No Snow</h4>
-<div id="c584991b-2abd-460f-9920-9030e64e4154" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>no_snow <span class="op">=</span> weather_df[<span class="st">"snow"</span>].eq(<span class="dv">0</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>snow_streak_id <span class="op">=</span> (no_snow <span class="op">!=</span> no_snow.shift()).cumsum()</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>snowless_streak_day <span class="op">=</span> weather_df.groupby(snow_streak_id).cumcount() <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>no_snow_week_plus_df <span class="op">=</span> weather_df[no_snow <span class="op">&amp;</span> (snowless_streak_day <span class="op">&gt;=</span> <span class="dv">7</span>)].copy()</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>no_snow_week_plus_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>6655</code></pre>
-</div>
-</div>
-</section>
-<section id="no-snow-and-no-rain" class="level4">
-<h4 class="anchored" data-anchor-id="no-snow-and-no-rain">No Snow and No Rain</h4>
-<div id="5b21ee10-6703-450c-b2ac-0a103443a07f" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>good_weather_conditions_df <span class="op">=</span> no_rain_two_plus_df.merge(no_snow_week_plus_df, how <span class="op">=</span> <span class="st">"inner"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>good_weather_conditions_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>3320</code></pre>
-</div>
-</div>
-<p>From the above code chunks, we can observe that there are 3320 days with no rain in the past two days and no snow within the past week. These are the number of days where the rock is dry enough to climb.</p>
-</section>
-</section>
-<section id="number-of-optimal-days" class="level3">
-<h3 class="anchored" data-anchor-id="number-of-optimal-days">Number of Optimal Days</h3>
-<p>Having found the days which satisfy all of our conditions above, we can now merge all the conditions to find the days with the most optimal climbing conditions in the past 20 years.</p>
-<div id="ee613edc-827c-4267-a87b-dc745dd0db8e" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>good_temp_weekends_df <span class="op">=</span> weekend_sunny_df.merge(good_temp_df, how <span class="op">=</span> <span class="st">"inner"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>optimal_days_df <span class="op">=</span> good_temp_weekends_df.merge(good_weather_conditions_df, how <span class="op">=</span> <span class="st">"inner"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>optimal_days_df.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<pre><code>1</code></pre>
-</div>
-</div>
-<p>Here we can see that only one day in the past 20 years actually fits all of our conditions.</p>
-<div id="fdd7166e-c0a0-4551-8005-07f631de47bf" class="cell" data-execution_count="17">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>optimal_days_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">day</th>
-<th data-quarto-table-cell-role="th">year</th>
-<th data-quarto-table-cell-role="th">high</th>
-<th data-quarto-table-cell-role="th">low</th>
-<th data-quarto-table-cell-role="th">rain</th>
-<th data-quarto-table-cell-role="th">snow</th>
-<th data-quarto-table-cell-role="th">date</th>
-<th data-quarto-table-cell-role="th">day_num</th>
-<th data-quarto-table-cell-role="th">month_num</th>
-<th data-quarto-table-cell-role="th">dow</th>
-<th data-quarto-table-cell-role="th">dow_name</th>
-<th data-quarto-table-cell-role="th">month</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>June 11</td>
-<td>2022</td>
-<td>75</td>
-<td>66</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>2022-06-11</td>
-<td>11</td>
-<td>6</td>
-<td>5</td>
-<td>Saturday</td>
-<td>June</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<p>That day is June 11th 2022, a Saturday with a high temperature of 75 degrees and a low of 66 degrees.</p>
-</section>
-<section id="spread-of-non-rainy-days-on-weekends" class="level3">
-<h3 class="anchored" data-anchor-id="spread-of-non-rainy-days-on-weekends">Spread of Non-Rainy Days on Weekends</h3>
-<p>Now, we know that it would be ridiculous to assume that people would only climb on days with the most optimal conditions. As such, we will simply consider the requirments that it must not be raining on the day and it must be on a weekend. A simple bar graph can illustrate the spead of days in which people can climb then.</p>
-<div id="589307e5-21be-42a1-8f1e-ae07b265f4e2" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> (</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    weather_df[weather_df[<span class="st">"rain"</span>] <span class="op">==</span> <span class="dv">0</span>]</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">"dow_name in ['Friday','Saturday','Sunday']"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"dow_name"</span>]</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    .reindex([<span class="st">"Friday"</span>,<span class="st">"Saturday"</span>,<span class="st">"Sunday"</span>])</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="4ee97763-8e38-48e1-8fd9-8e8df0f289de" class="cell" data-execution_count="20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.bar(counts.index, counts.values)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of Week"</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of Non-Rainy Days"</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Spead of Non-Rainy Days on Weekends"</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="tracking-shootings-by-year" class="level3">
+<h3 class="anchored" data-anchor-id="tracking-shootings-by-year">Tracking Shootings by Year</h3>
+<div id="d6eed9c0-11dc-45d2-ac04-199caa3ffc29" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>yearly <span class="op">=</span> shootings_df.groupby(<span class="st">'year'</span>).size()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>yearly_fatal <span class="op">=</span> shootings_df[shootings_df[<span class="st">'fatal'</span>]<span class="op">==</span><span class="dv">1</span>].groupby(<span class="st">'year'</span>).size()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.bar(yearly.index, yearly.values, label<span class="op">=</span><span class="st">'All shootings'</span>, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.bar(yearly_fatal.index, yearly_fatal.values, label<span class="op">=</span><span class="st">'Fatal'</span>, color<span class="op">=</span><span class="st">'firebrick'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Philadelphia Shootings by Year'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Shootings'</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="DOW_01_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DOW5_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>This graph shows us that the spread of non-rainy days on weekends is roughly the same, with a bit over 2100 days in total. As such, we can conclude that the total number of people who have climbed on a Friday, Saturday or Sunday are roughly equal.</p>
+<p>From the chart above, we can observe a large increase in shootings between 2020 and 2022. This is the COVID period, where there were lockdowns, sickness and increased poverty. Such conditions are likely to have accentuated societal unrest where falling living conditions would have resulted in increased crime.</p>
+<p>However, in recent years, the government has been working to reduce crime across Philadelphia where their efforts are reflected in the falling levels of gun violence.</p>
+</section>
+<section id="shootings-by-month" class="level3">
+<h3 class="anchored" data-anchor-id="shootings-by-month">Shootings by Month</h3>
+<div id="a0aacfd5-851a-442a-91d4-a7cceb10fc9e" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>month_order <span class="op">=</span> [<span class="st">'Jan'</span>,<span class="st">'Feb'</span>,<span class="st">'Mar'</span>,<span class="st">'Apr'</span>,<span class="st">'May'</span>,<span class="st">'Jun'</span>,<span class="st">'Jul'</span>,<span class="st">'Aug'</span>,<span class="st">'Sep'</span>,<span class="st">'Oct'</span>,<span class="st">'Nov'</span>,<span class="st">'Dec'</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>monthly <span class="op">=</span> shootings_df.groupby(<span class="st">'month_name'</span>).size().reindex(month_order)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.bar(monthly.index, monthly.values, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Shootings by Month (All Years)'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Month'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Total Shootings'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW5_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In observing the number of shootings across Philadelphia in different months, we can observe a pattern relating to the seasons. The highest levels of shootings occur in summer, between June and August, falling steadily in the colder winter months until February where it starts to increase again.</p>
+<div id="55d5ebc5-70bf-48cc-8da1-03a20a9e04e6" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>season_order <span class="op">=</span> [<span class="st">'Winter'</span>, <span class="st">'Spring'</span>, <span class="st">'Summer'</span>, <span class="st">'Fall'</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>season_pct <span class="op">=</span> season_pct.reindex(season_order)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.bar(season_pct.index, season_pct.values, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Proportion of Shootings by Season'</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Season'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'</span><span class="sc">% o</span><span class="st">f Total Shootings'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (season, val) <span class="kw">in</span> <span class="bu">enumerate</span>(season_pct.items()):</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    plt.text(i, val <span class="op">+</span> <span class="fl">0.3</span>, <span class="ss">f'</span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">%'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW5_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This chart better shows that trend where shootings are more likely in warmer months of the year. This can be attributed to the fact that in times of warmer and more comfortable weather, more people are likely to be in public spaces. This increases the chance of confrontation between individuals and thus increases the chance of shootings.</p>
+</section>
+<section id="shootings-by-day-and-hour" class="level3">
+<h3 class="anchored" data-anchor-id="shootings-by-day-and-hour">Shootings by Day and Hour</h3>
+<div id="68cf7e4c-f431-4763-b1e5-306271da5663" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>day_order <span class="op">=</span> [<span class="st">'Monday'</span>,<span class="st">'Tuesday'</span>,<span class="st">'Wednesday'</span>,<span class="st">'Thursday'</span>,<span class="st">'Friday'</span>,<span class="st">'Saturday'</span>,<span class="st">'Sunday'</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>heatmap_data <span class="op">=</span> shootings_df.groupby([<span class="st">'day_of_week'</span>,<span class="st">'hour'</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>heatmap_data <span class="op">=</span> heatmap_data.reindex(day_order)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.imshow(heatmap_data.values, aspect<span class="op">=</span><span class="st">'auto'</span>, cmap<span class="op">=</span><span class="st">'Reds'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Number of Shootings'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Shootings by Day and Hour'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Hour of Day'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Day of Week'</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.xticks(<span class="bu">range</span>(<span class="dv">24</span>), [<span class="ss">f'</span><span class="sc">{</span>h<span class="sc">:02d}</span><span class="ss">:00'</span> <span class="cf">for</span> h <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">24</span>)], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.yticks(<span class="bu">range</span>(<span class="dv">7</span>), day_order)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW5_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now which times would be the safest to go outside? In the heatmap above, it can be observed that most shootings happen late at night, between 7pm to 1am. Meanwhile, there are relatively few shootings in the early mornings between 5am and 11am and moderate levels in the afternoon between 11am and 6pm.</p>
+<p>As such, especially if travelling into a dangerous area, it would be recommended to go during the daytime.</p>
+</section>
+<section id="fatal-and-non-fatal-shootings-by-time-of-day" class="level3">
+<h3 class="anchored" data-anchor-id="fatal-and-non-fatal-shootings-by-time-of-day">Fatal and Non Fatal Shootings by Time of Day</h3>
+<div id="f869cab4-bace-4f2f-8832-7b901e413b14" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>hourly_fatal <span class="op">=</span> shootings_df[shootings_df[<span class="st">'fatal'</span>]<span class="op">==</span><span class="dv">1</span>].groupby(<span class="st">'hour'</span>).size()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>hourly_nonfatal <span class="op">=</span> shootings_df[shootings_df[<span class="st">'fatal'</span>]<span class="op">==</span><span class="dv">0</span>].groupby(<span class="st">'hour'</span>).size()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">24</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.plot(hours, [hourly_nonfatal.get(h, <span class="dv">0</span>) <span class="cf">for</span> h <span class="kw">in</span> hours], label<span class="op">=</span><span class="st">'Non-fatal'</span>, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.plot(hours, [hourly_fatal.get(h, <span class="dv">0</span>) <span class="cf">for</span> h <span class="kw">in</span> hours], label<span class="op">=</span><span class="st">'Fatal'</span>, color<span class="op">=</span><span class="st">'firebrick'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Fatal vs. Non-Fatal Shootings by Hour of Day'</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Hour of Day'</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Shootings'</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.xticks(hours, [<span class="ss">f'</span><span class="sc">{</span>h<span class="sc">:02d}</span><span class="ss">:00'</span> <span class="cf">for</span> h <span class="kw">in</span> hours], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW5_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The above chart now shows the total number of fatal and non-fatal shootings across Philadelphia by time. It can be observed that during night time, although the number of shootings increases significantly, most of those are non-fatal. By analysing the ratio between non-fatal and fatal shootings across the day, it can be seen that the ratio is significantly smaller during early daytime hours. This could imply that shootings in the daytime, although fewer in number are more deliberate and intended to be fatal.</p>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>As such, we can conclude that most of the shootings occur in warmer months when the sun is down. As such, it would be best to avoid dangerous areas during those times.</p>
 
 
 </section>
