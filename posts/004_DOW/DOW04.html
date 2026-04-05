@@ -6,11 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="An LLM User">
-<meta name="dcterms.date" content="2026-01-12">
-<meta name="description" content="An example post from a Jupyter notebook">
+<meta name="author" content="Wilson">
+<meta name="dcterms.date" content="2026-03-07">
 
-<title>A test post – My Data Stories</title>
+<title>Dataset of the Week #4: Philly Crash Data – My Data Stories</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -150,15 +149,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">A test post</h1>
-                  <div>
-        <div class="description">
-          An example post from a Jupyter notebook
-        </div>
-      </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">visualization</div>
-                <div class="quarto-category">data stories</div>
+      <h1 class="title">Dataset of the Week #4: Philly Crash Data</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">DOW</div>
+                <div class="quarto-category">Crash Data</div>
               </div>
                   </div>
   </div>
@@ -169,14 +163,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>An LLM User </p>
+               <p>Wilson </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 12, 2026</p>
+        <p class="date">March 7, 2026</p>
       </div>
     </div>
     
@@ -195,31 +189,102 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="aa3244f6-8010-4390-b8ca-383ad9126fa1" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="do-street-lamps-affect-crashes-in-philly" class="level1">
+<h1>Do Street Lamps Affect Crashes in Philly</h1>
+<p><img src="img/crash.jpeg" width="450" style="display:block; margin:auto;"></p>
+<p>With a significant number of vehicular crashes happening across Philly every year, it is important to consider different factors that could help reduce the prevelance of such incidents. One variable that should be considered is the presence of street lamps across Philly. An increase in the number fo street lamps could potentially help reduce the number of traffic incidents at night by allowing for greater visibility for drivers.</p>
+<section id="loading-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="loading-the-data">Loading the Data</h3>
+<div id="a0ade9f9-5abe-4367-a792-f6edab8259d3" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> camelot</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> calendar</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="stories-from-data" class="level2">
-<h2 class="anchored" data-anchor-id="stories-from-data">Stories from data</h2>
-<ul>
-<li>Let’s set up some data</li>
-</ul>
-<div id="9c799178-2c98-46a7-87fb-3fbbef3bcc05" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="8c2dcd0b-bf10-41e7-9a2f-dc60c73fea0c" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>crash_data <span class="op">=</span> pd.read_csv(<span class="st">'data/PDOT_crash_data_2005_2024.csv'</span>, low_memory<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>street_pole_data <span class="op">=</span> gpd.read_file(<span class="st">'data/Street_Poles.geojson'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>crash_data <span class="op">=</span> crash_data[crash_data[<span class="st">"COUNTY"</span>] <span class="op">==</span> <span class="dv">67</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="now-lets-visualize-it" class="level3">
-<h3 class="anchored" data-anchor-id="now-lets-visualize-it">Now let’s visualize it</h3>
-<div id="9e226edb-5315-4d01-a6a6-709d5858e4a9" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.bar(x, y)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="observing-the-location-of-the-crashes-in-relation-to-the-street-lamps" class="level3">
+<h3 class="anchored" data-anchor-id="observing-the-location-of-the-crashes-in-relation-to-the-street-lamps">Observing the Location of the Crashes in relation to the street lamps</h3>
+<div id="cab15f86-c36c-40bd-a13c-a2bec33950ea" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>crash_data_clean <span class="op">=</span> crash_data.dropna(subset<span class="op">=</span>[<span class="st">"DEC_LONGITUDE"</span>, <span class="st">"DEC_LATITUDE"</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>crash_data_clean <span class="op">=</span> crash_data_clean[</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    (crash_data_clean[<span class="st">"DEC_LONGITUDE"</span>] <span class="op">!=</span> <span class="dv">0</span>) <span class="op">&amp;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    (crash_data_clean[<span class="st">"DEC_LATITUDE"</span>] <span class="op">!=</span> <span class="dv">0</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>lights <span class="op">=</span> gpd.read_file(<span class="st">'data/Street_Poles.geojson'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>crashes <span class="op">=</span> gpd.GeoDataFrame(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    crash_data_clean,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    geometry<span class="op">=</span>gpd.points_from_xy(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        crash_data_clean[<span class="st">"DEC_LONGITUDE"</span>],</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        crash_data_clean[<span class="st">"DEC_LATITUDE"</span>],</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    crs<span class="op">=</span><span class="st">"EPSG:4326"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>crashes_m <span class="op">=</span> crashes.to_crs(epsg<span class="op">=</span><span class="dv">3857</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>lights_m <span class="op">=</span> lights.to_crs(epsg<span class="op">=</span><span class="dv">3857</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> gpd.sjoin_nearest(</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    crashes_m,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    lights_m,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    distance_col<span class="op">=</span><span class="st">"dist_to_light"</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>joined[<span class="st">"dist_to_light"</span>] <span class="op">=</span> joined[<span class="st">"dist_to_light"</span>] <span class="op">/</span> <span class="fl">1609.34</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>joined[<span class="st">"dist_to_light"</span>].hist(bins<span class="op">=</span><span class="dv">50</span>, <span class="bu">range</span><span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.5</span>))</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Distance to nearest streetlight (miles)"</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of crashes"</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DOW04_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>From the chart above, we can observe that most crashes observe within 0.03 miles of a traffic light with a limited number of outliers occuring far outside that range. This can mostly be attributed to the large presence of street lamps across the city which means that all crashes are almost guaranteed to occur next to a street lamp.</p>
+</section>
+<section id="comparing-daytime-and-nightime-crashes" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-daytime-and-nightime-crashes">Comparing Daytime and Nightime Crashes</h3>
+<div id="504fd911-5260-410a-a6bf-6a91b14cbeaf" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>night <span class="op">=</span> joined[(joined[<span class="st">"HOUR_OF_DAY"</span>] <span class="op">&gt;=</span> <span class="dv">20</span>) <span class="op">|</span> (joined[<span class="st">"HOUR_OF_DAY"</span>] <span class="op">&lt;=</span> <span class="dv">6</span>)]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>day <span class="op">=</span> joined[(joined[<span class="st">"HOUR_OF_DAY"</span>] <span class="op">&gt;</span> <span class="dv">6</span>) <span class="op">&amp;</span> (joined[<span class="st">"HOUR_OF_DAY"</span>] <span class="op">&lt;</span> <span class="dv">20</span>)]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>day[<span class="st">"dist_to_light"</span>].hist(bins<span class="op">=</span><span class="dv">50</span>, <span class="bu">range</span><span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.05</span>), ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Daytime Crashes (7 AM – 7 PM)"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Distance to nearest streetlight (miles)"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Number of crashes"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>night[<span class="st">"dist_to_light"</span>].hist(bins<span class="op">=</span><span class="dv">50</span>, <span class="bu">range</span><span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.05</span>), ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Nighttime Crashes (8 PM – 6 AM)"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Distance to nearest streetlight (miles)"</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW04_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From the charts above, we can further observe that the distribution of the distance of vehicular crashes from the nearest street lamp follows roughly the same distribution during both the day and night. Once again, this would be attributed to the huge presence of street lamps across the city meaning most car accidents would happen next to one. This means that we are unable to conclude if street lamps are actually effective in preventing car accidents at night time.</p>
 
 
 </section>
