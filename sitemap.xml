@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/001_DOW_weather/DOW_01.html</loc>
-    <lastmod>2026-04-05T22:46:18.116Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/002_DOW_Big5_personality_test/DOW_02.html</loc>
-    <lastmod>2026-04-05T22:46:18.118Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/005_DOW/DOW5.html</loc>
-    <lastmod>2026-04-05T22:46:18.601Z</lastmod>
-  </url>
-  <url>
     <loc>https://Wilozz.github.io/comm3180_S26_Blog/index.html</loc>
-    <lastmod>2026-04-05T22:46:18.113Z</lastmod>
+    <lastmod>2026-04-22T01:52:58.424Z</lastmod>
   </url>
   <url>
-    <loc>https://Wilozz.github.io/comm3180_S26_Blog/about.html</loc>
-    <lastmod>2026-04-05T22:46:18.113Z</lastmod>
+    <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/006_DOW/DOW06.html</loc>
+    <lastmod>2026-04-22T01:52:58.913Z</lastmod>
   </url>
   <url>
     <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/000_test_post/index.html</loc>
-    <lastmod>2026-04-05T22:46:18.116Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/003_DOW_Winter_Olympics/DOW_3.html</loc>
-    <lastmod>2026-04-05T22:46:18.473Z</lastmod>
+    <lastmod>2026-04-22T01:52:58.427Z</lastmod>
   </url>
   <url>
     <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/004_DOW/DOW04.html</loc>
-    <lastmod>2026-04-05T22:46:18.599Z</lastmod>
+    <lastmod>2026-04-22T01:52:58.910Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/001_DOW_weather/DOW_01.html</loc>
+    <lastmod>2026-04-22T01:52:58.427Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/005_DOW/DOW5.html</loc>
+    <lastmod>2026-04-22T01:52:58.912Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/002_DOW_Big5_personality_test/DOW_02.html</loc>
+    <lastmod>2026-04-22T01:52:58.429Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Wilozz.github.io/comm3180_S26_Blog/posts/003_DOW_Winter_Olympics/DOW_3.html</loc>
+    <lastmod>2026-04-22T01:52:58.783Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Wilozz.github.io/comm3180_S26_Blog/about.html</loc>
+    <lastmod>2026-04-22T01:52:58.424Z</lastmod>
   </url>
 </urlset>
